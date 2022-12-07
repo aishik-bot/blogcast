@@ -9,11 +9,13 @@ function Navbar() {
                 <div className='nav-search'>Search</div>
                 <div className='logo'>
                   <NavLink className='nav-link-logo' to="/">
-                    <h1>BlogCast</h1>
+                    <h1 style={{"fontSize": "40px"}}>BlogCast</h1>
                   </NavLink>
                 </div>
                 <div className='login-button'>
-                  <button>Login</button>
+                  <NavLink to="/login">
+                    <button>Login</button>
+                  </NavLink>
                 </div>
             </div>
             <nav className='nav-bar'>
