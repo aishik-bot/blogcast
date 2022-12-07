@@ -17,6 +17,7 @@ body{
   align-items: center;
   background-color: black;
   height: 6vh;
+  padding: 10px 0;
 }
 
 @media(max-width: 480px){
@@ -37,23 +38,26 @@ body{
 
 .nav-link{
   text-decoration: none;
+  display: block;
   color: white;
   margin: 5px 0;
+  transition-duration: 0.1s;
 }
 
 .nav-link:hover{
-  font-size: larger;
+  font-size: larger;  
 }
 
 .login-button button{
   background-color: white;
   color: black;
   border: 1px solid;
+  border-radius: 8px;
   font-size: 100%;
   font-weight: bolder;
   padding: 10px 15px;
   cursor: pointer;
-  transition-duration: 0.9s;
+  transition-duration: 0.5s;
 }
 
 .login-button button:hover{
