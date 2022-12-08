@@ -16,7 +16,11 @@ function Navbar() {
                   <NavLink to="/login">
                     <button>Login</button>
                   </NavLink>
+                  <NavLink to="/signUp">
+                    <button>Sign Up</button>
+                  </NavLink>
                 </div>
+                
             </div>
             <nav className='nav-bar'>
                 <NavLink className='nav-link' to="/travel">Travel</NavLink>
