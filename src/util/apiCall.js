@@ -1,13 +1,14 @@
 import { Auth } from "aws-amplify";
-export const signUp = async (email, uName, pwd) => {
-    console.log(email, uName, pwd);
+export const signUp = async (email, username, pwd) => {
+    console.log(email, username, pwd);
 
     try {
         const { user } = await Auth.signUp({
             username: email,
             password: pwd,
             attributes: {
-                email: email
+                email: email,
+                preferred_username :username
             },
             autoSignIn: {
                 enabled: true
@@ -47,5 +48,6 @@ export const signIn = async (username, password) => {
         return user;
     } catch (error) {
         console.log('error signing in', error);
+        throw error;
     }
 }

@@ -2,9 +2,14 @@ import React from 'react'
 import { useFormik } from 'formik'
 import {signIn} from '../../util/apiCall'
 import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+import ConfirmSignUp from './ConfirmSignUp'
+import {resendConfirmationCode } from '../../util/apiCall'
+
 
 export default function Login() {
   const navigate = useNavigate()
+  const [error, setError] = useState('');
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -14,13 +19,21 @@ export default function Login() {
       try{
         const user = await signIn(val.email, val.password)
         console.log(user)
-        alert("Welcome"+user.username)
+        alert("Welcome "+user.attributes.preferred_username)
         navigate('/')
-      }catch(error){
-        console.log(error)
+      }catch(err){
+        if(err.name==='UserNotConfirmedException'){
+          setError(err.name)
+          await resendConfirmationCode(val.email)
+        }
+        console.log(err.name)
       }
     }
   })
+  if(error==='UserNotConfirmedException')
+    return(
+      <ConfirmSignUp username={formik.values.email}/>
+    )
   return(
     <>
       <h1>Login</h1>

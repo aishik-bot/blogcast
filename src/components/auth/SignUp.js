@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useFormik } from 'formik'
-import {signUp} from '../../util/apiCall'
-import { Redirect } from 'react-router-dom';
+import { signUp } from '../../util/apiCall';
 import ConfirmSignUp from './ConfirmSignUp';
 
 
@@ -14,11 +13,12 @@ function SignUp() {
   const formik = useFormik({
     initialValues: {
       email: '',
+      username: '',
       password: ''
     },
     onSubmit: async (val) =>{
       try{
-        const userInfo = await signUp(val.email, 'abc', val.password)
+        const userInfo = await signUp(val.email, val.username, val.password)
         setUser(userInfo)
         console.log({user})
       }catch(error){
@@ -29,6 +29,7 @@ function SignUp() {
   if(!user.username){
     return (
       <>
+        <h1>Sign Up</h1>
         <form onSubmit={formik.handleSubmit}>
           <input 
             type='email' 
@@ -36,6 +37,14 @@ function SignUp() {
             name='email' 
             placeholder='Enter your email'
             value={formik.values.email}
+            onChange={formik.handleChange}
+          />
+          <input 
+            type='text' 
+            id='username' 
+            name='username' 
+            placeholder='Enter a preferred username'
+            value={formik.values.username}
             onChange={formik.handleChange}
           />
           <input 

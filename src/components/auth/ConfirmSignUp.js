@@ -12,7 +12,7 @@ function ConfirmSignUp({username}) {
         onSubmit: async (values)=>{
             try {
                 const res = await confirmSignUp(username, values.code)
-                if(res=='SUCCESS')
+                if(res==='SUCCESS')
                     console.log("User verified")
                 navigate("/")
             } catch (error) {
