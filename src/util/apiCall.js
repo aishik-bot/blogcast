@@ -51,3 +51,13 @@ export const signIn = async (username, password) => {
         throw error;
     }
 }
+
+export const signOut = async () => {
+    console.log("Inside signout")
+    try {
+        await Auth.signOut({ global: true });
+    } catch (error) {
+        console.log('error signing out: ', error);
+        throw error
+    }
+}
