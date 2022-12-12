@@ -1,0 +1,10 @@
+{
+  "resourceName": "dynamoa83bd4dd",
+  "tableName": "blogtable",
+  "partitionKey": {
+    "fieldName": "id",
+    "fieldType": "string"
+  },
+  "gsi": [],
+  "triggerFunctions": []
+}

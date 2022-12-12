@@ -19,11 +19,14 @@
       "function": {
         "bloghandler": {
           "deploymentBucketName": "amplify-blogcast-dev-152312-deployment",
-          "s3Key": "amplify-builds/bloghandler-6a38756b733971786554-build.zip"
+          "s3Key": "amplify-builds/bloghandler-6a417737396734415937-build.zip"
         }
       },
       "api": {
         "blogcastapi": {}
+      },
+      "storage": {
+        "dynamoa83bd4dd": {}
       }
     }
   }
