@@ -1,0 +1,21 @@
+h1{
+    margin-left: 15px;
+}
+
+.card-container{
+    display: flex;
+    /* justify-content: center; */
+    flex-wrap: wrap;
+}
+
+.card-column{
+    flex: 0 1 33.33333%;
+}
+
+@media (max-width: 480px){
+    .card-container{
+        flex-direction: column;
+        height: auto;
+    }
+}
+

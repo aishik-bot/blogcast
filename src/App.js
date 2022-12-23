@@ -1,16 +1,14 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
-import Travel from "./components/pages/Travel";
 import './App.css'
-import Business from "./components/pages/Business";
 import Home from "./components/pages/Home";
 import Login from "./components/auth/Login";
 import MyBlogs from "./components/pages/MyBlogs";
 import SignUp from "./components/auth/SignUp";
 import ConfirmSignUp from "./components/auth/ConfirmSignUp";
 import AuthLayout from "./components/auth/AuthLayout";
-import Sports from "./components/pages/Sports";
-import Entertainment from "./components/pages/Entertainment";
+import BlogCategory from "./components/pages/BlogCategory";
+import BlogDetails from "./components/pages/BlogDetails";
 
 function App() {
   return (
@@ -25,10 +23,11 @@ function App() {
             <Route path="/confirm-signup" element={<ConfirmSignUp/>}/>
 
 
-            <Route path="/travel" element={<Travel/>}/>
-            <Route path="/business" element={<Business/>}/>
-            <Route path="/sports" element={<Sports/>}/>
-            <Route path="/entertainment" element={<Entertainment/>}/>
+            <Route path="/travel" element={<BlogCategory category='Travel'/>}/>
+            <Route path="/business" element={<BlogCategory category='Business'/>}/>
+            <Route path="/sports" element={<BlogCategory category='Sports'/>}/>
+            <Route path="/entertainment" element={<BlogCategory category='Entertainment'/>}/>
+            <Route path="/blogs/:blogId" element={<BlogDetails/>}/>
             <Route path="/my-blogs" element={<MyBlogs/>}/>
           </Routes>
         </AuthLayout>
