@@ -54,7 +54,7 @@ exports.handler = async (event, context, callback) => {
 
     const getBlogsByParams = async (params)=>{
         try {
-            const blogs = await dynamo.query (params).promise()
+            const blogs = await dynamo.query(params).promise()
             return blogs;
         } catch (error) {
             console.log("blogs category", error)
@@ -190,14 +190,14 @@ exports.handler = async (event, context, callback) => {
             console.log("DELETE error", error)
         }
     }
-    else if(event.httpMethod=="PUT" && event.pathParameters!=null){
+    else if(event.httpMethod=="PATCH" && event.pathParameters!=null){
         const {blogId} = event.pathParameters;
         const params = {
             TableName: 'blogtable-dev',
             Key:{
                 id: blogId
             },
-            UpdateExpression: "set title = :title, category = :category, content = :content",
+            UpdateExpression: "SET title = :title, category = :category, content = :content",
             ExpressionAttributeValues: {
                 ":title" : body.title,
                 ":category": body.category,

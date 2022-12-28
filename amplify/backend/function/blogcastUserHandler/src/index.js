@@ -6,6 +6,7 @@
 
 const AWS = require('aws-sdk')
 const dynamo = new AWS.DynamoDB.DocumentClient() 
+const mongoose = require('mongoose')
 
 exports.handler = async (event, context, callback) => {
     console.log(`EVENT: ${JSON.stringify(event)}`);
@@ -47,7 +48,7 @@ exports.handler = async (event, context, callback) => {
 
         try {
             console.log(`inside /user/${userId}`)
-            const blogs = await getUserBlogs(params)
+            const blogs = await getUserBlogs(userId)
             let res = buildResponse(200, blogs)
             callback(null, res)
         } catch (error) {

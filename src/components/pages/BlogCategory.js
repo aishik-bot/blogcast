@@ -17,7 +17,7 @@ function BlogCategory({category}) {
             const bloglist = await API.get('blogcastapi', `/blogs?category=${path}`)
             console.log("Blogs fetched successfully")
             console.log({bloglist})
-            setblogs(bloglist.blogs.Items)
+            setblogs(bloglist.blogs)
         } catch (error) {
             console.log("Error in fetch blogs", error)
         }

@@ -19,11 +19,15 @@
       "function": {
         "bloghandler": {
           "deploymentBucketName": "amplify-blogcast-dev-152312-deployment",
-          "s3Key": "amplify-builds/bloghandler-564f72725333706d3577-build.zip"
+          "s3Key": "amplify-builds/bloghandler-59455156756251697a7a-build.zip"
         },
         "blogcastUserHandler": {
           "deploymentBucketName": "amplify-blogcast-dev-152312-deployment",
-          "s3Key": "amplify-builds/blogcastUserHandler-6644464971504444677a-build.zip"
+          "s3Key": "amplify-builds/blogcastUserHandler-62556a716d30717a442b-build.zip"
+        },
+        "mongoBlogHandler": {
+          "deploymentBucketName": "amplify-blogcast-dev-152312-deployment",
+          "s3Key": "amplify-builds/mongoBlogHandler-776355414c7069694238-build.zip"
         }
       },
       "api": {

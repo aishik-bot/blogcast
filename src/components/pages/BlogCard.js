@@ -11,7 +11,7 @@ function BlogCard({blog}) {
         <div>
             <p>{blog.content.slice(0,100)}...</p>
         </div>
-        <NavLink to={"/blogs/"+blog.id}>Read more</NavLink>
+        <NavLink to={"/blogs/"+blog._id}>Read more</NavLink>
     </div>
   )
 }

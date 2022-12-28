@@ -1,12 +1,14 @@
 import { API, Auth } from 'aws-amplify';
 import React,{useEffect, useState} from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { useFormik } from 'formik';
 import './BlogDetails.css'
 
 function BlogDetails() {
     const {blogId} = useParams();
     const [blog, setBlog] = useState();
     const [currentUser, setCurrentUser] = useState();
+    const [updateToggle, setUpdateToggle] = useState(false)
 
     const navigate = useNavigate()
 
@@ -41,12 +43,38 @@ function BlogDetails() {
             console.log("blogId: ", blogId)
             const blogData = await API.get('blogcastapi', `/blogs/${blogId}`);
             console.log("blogData: ", blogData)
-            console.log("blog details",blog)
             setBlog(blogData)
+            console.log("blog details",blog)
         } catch (error) {
             console.log("Error in blog details fetchBlog", error)
         }
     }
+
+    const formik = useFormik({
+        enableReinitialize: true,
+        initialValues:{
+          title: '',
+          category: '',
+          content: ''
+        },
+        onSubmit: async (values, {resetForm})=>{
+          try {
+            await API.patch('blogcastapi', `/blogs/${blogId}`, {
+                body: {
+                title: values.title,
+                category: values.category,
+                content: values.content}
+            })
+            alert("Details updated successfully")
+            console.log("blog: ", values);
+            resetForm()
+            setUpdateToggle(false)
+            fetchBlog()
+          } catch (error) {
+            console.log(error)
+          }
+        }
+    });
 
     // const getUsername = async ()=>{
     //     try {
@@ -60,18 +88,43 @@ function BlogDetails() {
   return (
     <>
         <div className='blog-container'>
-            {currentUser==blog[0].user?
+            {currentUser==blog.blog.user?
                 <div>
-                    <button>Edit</button>
-                    <button onClick={deleteBlog}>Delete</button>
+                    {updateToggle?
+                        <>
+                            <form onSubmit={formik.handleSubmit}>
+                                <label htmlFor="title">Title: </label>
+                                <input type="text" id="title" value={formik.values.title} onChange={formik.handleChange}/><br/>
+
+                                <label htmlFor="category">Category: </label>
+                                <select name="category" id="category" value={formik.values.category} onChange={formik.handleChange}>
+                                <option value="" disabled hidden>Select a category</option>
+                                <option value="travel">Travel</option>
+                                <option value="business">Business</option>
+                                <option value="sports">Sports</option>
+                                <option value="entertainment">Entertainment</option>
+                                </select><br/>
+
+                                <label id="content">Content:</label>
+                                <textarea id="content" rows="4" cols="100" value={formik.values.content} onChange={formik.handleChange}/>
+                                <br/>
+                                <button type="submit">Update</button>
+                            </form>
+                            <button onClick={()=>setUpdateToggle(false)}>cancel</button>
+                        </>
+                        :<>
+                            <button onClick={()=>setUpdateToggle(true)}>Edit</button>
+                            <button onClick={deleteBlog}>Delete</button>
+                        </>
+                    }
                 </div>
                 :null
             }
-            <h1 style={{margin: "5px 0"}}>{blog[0].title}</h1>
-            <h4 style={{color: "grey", margin: "0"}}>{blog[0].category}</h4>
-            <h3>by <span style={{fontStyle: "italic"}}>{blog[0].user}</span></h3>
+            <h1 style={{margin: "5px 0"}}>{blog.blog.title}</h1>
+            <h4 style={{color: "grey", margin: "0"}}>{blog.blog.category}</h4>
+            <h3>by <span style={{fontStyle: "italic"}}>{blog.blog.user}</span></h3>
             <img className='featured-img' src='https://www.indeftts.com/wp-content/uploads/2019/08/placeholder.gif'/>
-            <p>{blog[0].content}</p>
+            <p>{blog.blog.content}</p>
         </div>
     </>
   )

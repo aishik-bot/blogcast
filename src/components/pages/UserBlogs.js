@@ -19,7 +19,7 @@ function UserBlogs({user}) {
                 }
             }
             const blogList = await API.get('blogcastapi', `/user/${user.username}`, requestInfo)
-            setBlogs(blogList.Items)
+            setBlogs(blogList.blogs)
             console.log({blogs})
         } catch (error) {
             console.log("Error in userblogs fetchblogs:", error)
