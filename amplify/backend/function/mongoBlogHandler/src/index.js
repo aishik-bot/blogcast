@@ -11,6 +11,7 @@ exports.handler = async (event, context, callback) => {
     context.callbackWaitsForEmptyEvenLoop = false
 
     const body = JSON.parse(event.body)
+    //set up a mongodb atlas connection
     await connectToDb()
 
     const buildResponse = (statusCode, resBody)=>{
@@ -24,7 +25,7 @@ exports.handler = async (event, context, callback) => {
             body: JSON.stringify(resBody)
         }
     }
-
+    //create a new blog
     if(event.httpMethod == "POST"){
         try {
 
@@ -51,12 +52,13 @@ exports.handler = async (event, context, callback) => {
             let res = buildResponse(500, {
                 success: false,
                 message: "Blog creation failed",
-                error: error.message
+                error: error
             })
-            callback(null, res)
+            return(res)
 
         }
     }
+    //get all blogs in the database
     else if(event.httpMethod=="GET"  && event.pathParameters==null  && event.queryStringParameters==null){
         try {
             const blogs = await getAllBlogs()
@@ -65,20 +67,15 @@ exports.handler = async (event, context, callback) => {
                 blogs
             }))
         } catch (error) {
-            return{
-                statusCode: 500,
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin':'*',
-                    'Access-Control-Allow-Methods':'*'
-                },
-                body: JSON.stringify({
-                    message: "Blog fetching failed",
-                    error: error.message
-                })
-            }
+            let res = buildResponse(500, {
+                success: false,
+                message: "Blog fetch failed",
+                error: error
+            })
+            return(res)
         }
     }
+    //get specific blog data for blogId given as path parameter 
     else if(event.httpMethod=="GET" && event.requestContext.resourcePath=='/blogs/{blogId}' && event.pathParameters!=null){
         const {blogId} = event.pathParameters;
         try {
@@ -97,6 +94,7 @@ exports.handler = async (event, context, callback) => {
             }))
         }
     }
+    //get blogs of a specific user with userId passed as path parameter
     else if(event.httpMethod=="GET" && event.requestContext.resourcePath=='/user/{userId}' && event.pathParameters!=null){
         const {userId} = event.pathParameters;
         try {
@@ -116,6 +114,7 @@ exports.handler = async (event, context, callback) => {
             }))
         }
     }
+    //get blogs of a category passed as a query parameter
     else if(event.httpMethod=="GET" && event.queryStringParameters.category!=null){
         const category = event.queryStringParameters.category;
 
@@ -132,6 +131,7 @@ exports.handler = async (event, context, callback) => {
             }))
         }
     }
+    //delete a blog with passed blogId
     else if(event.httpMethod=="DELETE" && event.pathParameters!=null){
         const {blogId} = event.pathParameters;
         try {
@@ -147,6 +147,7 @@ exports.handler = async (event, context, callback) => {
             }))
         }
     }
+    //update a blog with blogId passed as path parameter
     else if(event.httpMethod=="PATCH" && event.pathParameters!=null){
         const {blogId} = event.pathParameters;
         try {
