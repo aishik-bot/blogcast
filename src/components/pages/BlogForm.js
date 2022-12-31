@@ -1,6 +1,16 @@
 import React from 'react'
 import { API } from 'aws-amplify';
 import { useFormik } from 'formik';
+import { Storage } from 'aws-amplify';
+
+Storage.configure({
+  AWSS3: {
+    bucket: 'blogcastblogs152312-dev',
+    region: 'us-east-1',
+    level: 'private'
+    // acl: 'public-read'
+  }
+})
 
 function BlogForm({user}) {
 
@@ -10,10 +20,12 @@ function BlogForm({user}) {
           user: user&&user.username,
           title: '',
           category: '',
-          content: ''
+          content: '',
+          coverImg: ''
         },
         onSubmit: async (values, {resetForm})=>{
           try {
+            
             await postBlog(values)
             alert("Blog posted successfully")
             console.log("blog: ", values);
@@ -23,6 +35,22 @@ function BlogForm({user}) {
           }
         }
     });
+    const uploadImg = async(file)=>{
+      try {
+        console.log({file})
+        const {key} = await Storage.put(`${formik.values.user}-${formik.values.title}.jpg`, file, {
+          contentType: 'image/jpg'
+        })
+        console.log("s3 key: ", key)
+        formik.setFieldValue("coverImg", key)
+        console.log(formik.values.coverImg)
+        // const img_url = await Storage.get(key)
+        // console.log(img_url)
+
+      } catch (error) {
+        console.log("Error uploading image: ", error)
+      }
+    }
     const postBlog = async (values)=>{
         try {
           const token = user.signInUserSession.idToken.jwtToken;
@@ -35,12 +63,13 @@ function BlogForm({user}) {
               user: user&&user.username,
               title: values.title,
               category: values.category,
-              content: values.content
+              content: values.content,
+              coverImg: values.coverImg
             }
           }
           await API.post('blogcastapi','/blogs',requestInfo);
         } catch (error) {
-          console.log("Erro in post blog", error)
+          console.log("Error in post blog", error)
           return error
         }
     }
@@ -64,6 +93,9 @@ function BlogForm({user}) {
                 <label id="content">Content:</label>
                 <textarea id="content" rows="4" cols="100" value={formik.values.content} onChange={formik.handleChange}/>
                 <br/>
+
+                <label id="cover-photo">Cover Photo: </label>
+                <input type="file" id="cover-photo" accept="image/jpg" onChange={(e)=>uploadImg(e.target.files[0])}/><br/>
                 <button type="submit">Post Blog</button>
             </form>
         </div>

@@ -27,14 +27,15 @@
         },
         "mongoBlogHandler": {
           "deploymentBucketName": "amplify-blogcast-dev-152312-deployment",
-          "s3Key": "amplify-builds/mongoBlogHandler-776355414c7069694238-build.zip"
+          "s3Key": "amplify-builds/mongoBlogHandler-5a6f6f50504e666a324a-build.zip"
         }
       },
       "api": {
         "blogcastapi": {}
       },
       "storage": {
-        "dynamoa83bd4dd": {}
+        "dynamoa83bd4dd": {},
+        "blogcasts3": {}
       }
     }
   }

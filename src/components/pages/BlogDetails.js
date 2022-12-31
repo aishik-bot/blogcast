@@ -123,7 +123,7 @@ function BlogDetails() {
             <h1 style={{margin: "5px 0"}}>{blog.blog.title}</h1>
             <h4 style={{color: "grey", margin: "0"}}>{blog.blog.category}</h4>
             <h3>by <span style={{fontStyle: "italic"}}>{blog.blog.user}</span></h3>
-            <img className='featured-img' src='https://www.indeftts.com/wp-content/uploads/2019/08/placeholder.gif'/>
+            <img className='featured-img' src={blog.blog.coverImg}/>
             <p>{blog.blog.content}</p>
         </div>
     </>

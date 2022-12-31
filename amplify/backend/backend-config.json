@@ -75,6 +75,11 @@
     "dynamoa83bd4dd": {
       "service": "DynamoDB",
       "providerPlugin": "awscloudformation"
+    },
+    "blogcasts3": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": []
     }
   }
 }

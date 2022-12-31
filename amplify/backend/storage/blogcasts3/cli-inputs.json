@@ -1,0 +1,14 @@
+{
+  "resourceName": "blogcasts3",
+  "policyUUID": "a79813ca",
+  "bucketName": "blogcastblogs",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}

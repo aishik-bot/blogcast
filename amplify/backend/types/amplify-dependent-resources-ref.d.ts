@@ -45,6 +45,10 @@ export type AmplifyDependentResourcesAttributes = {
             "PartitionKeyName": "string",
             "PartitionKeyType": "string",
             "Region": "string"
+        },
+        "blogcasts3": {
+            "BucketName": "string",
+            "Region": "string"
         }
     }
 }

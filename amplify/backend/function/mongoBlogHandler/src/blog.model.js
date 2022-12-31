@@ -17,6 +17,11 @@ const blogSchema = new mongoose.Schema({
     user: {
         type: String,
         required: true
+    },
+    coverImg: {
+        type: String,
+        required: true,
+        default: "https://deerassociation.com/wp-content/uploads/2022/05/Placeholder-Landscape.jpg"
     }
 })
 

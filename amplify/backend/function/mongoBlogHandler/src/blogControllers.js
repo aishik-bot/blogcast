@@ -1,13 +1,15 @@
 const Blog = require('./blog.model');
 
 const createBlog = async (body)=>{
-    const {title, category, content, user} = body;
+    const {title, category, content, user, coverImg} = body;
     try {
+        console.log("Inside createBlog", body)
         await Blog.create({
             title: title,
             category: category,
             content: content,
-            user: user
+            user: user,
+            coverImg: coverImg
         })
 
         console.log("Inside createBlog: Blog creation successful!")
